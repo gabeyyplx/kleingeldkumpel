@@ -7,9 +7,9 @@ import {
 } from 'react-router-dom'
 import { checkAuth } from './utils/auth'
 
-import LoadingScreen from './components/LoadingScreen'
-import LoginForm from './components/LoginForm'
-import Dashboard from './components/Dashboard'
+import LoadingScreen from './screens/LoadingScreen'
+import LoginForm from './screens/LoginForm'
+import Dashboard from './screens/Dashboard'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState('false')
