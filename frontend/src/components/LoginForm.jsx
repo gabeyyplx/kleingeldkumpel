@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {
   Box,
-  Flex,
+  Center,
   Button,
   FormControl,
   FormLabel,
@@ -10,7 +10,7 @@ import {
   useToast,
 } from '@chakra-ui/react'
 
-function LoginForm() {
+const LoginForm = ({ setIsLoggedIn }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -31,11 +31,10 @@ function LoginForm() {
 
       const data = await response.json()
       if (response.ok) {
-        // Speichern des Tokens und Weiterleitung zum Dashboard
         localStorage.setItem('token', data.token)
+        setIsLoggedIn(true)
         toast({
           title: 'Login successful',
-          description: 'You will be redirected (eventually)',
           status: 'success',
           duration: 3000,
           isClosable: true,
@@ -57,15 +56,16 @@ function LoginForm() {
         duration: 3000,
         isClosable: true,
       })
+      console.log(error)
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <Flex w='100%' minH='100vh' align='center' justify='center'>
-      <Box maxW='sm' mx='auto' mt={5}>
-        <Heading as='h1' mb={10}>
+    <Center w='100%' minH='100vh'>
+      <Box maxW='sm' mx='auto' mt={6}>
+        <Heading as='h1' mb={9}>
           💰 kleingeldkumpel
         </Heading>
         <form onSubmit={handleSubmit}>
@@ -77,7 +77,7 @@ function LoginForm() {
               onChange={(event) => setUsername(event.target.value)}
             />
           </FormControl>
-          <FormControl id='password' mt={4}>
+          <FormControl id='password' mt={3}>
             <FormLabel>Password</FormLabel>
             <Input
               type='password'
@@ -85,12 +85,12 @@ function LoginForm() {
               onChange={(event) => setPassword(event.target.value)}
             />
           </FormControl>
-          <Button mt={4} type='submit' isLoading={isLoading}>
+          <Button mt={3} type='submit' isLoading={isLoading}>
             Login
           </Button>
         </form>
       </Box>
-    </Flex>
+    </Center>
   )
 }
 
