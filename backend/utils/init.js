@@ -20,10 +20,10 @@ async function createDefaultUserAndAccount() {
       )
     }
 
-    const accountCondition = userId ? { where: { UserId: req.user.id } } : null // Check if user has an account or if there are any accounts at all
+    const accountCondition = userId ? { where: { UserId: userId } } : null // Check if user has an account or if there are any accounts at all
     const accountCount = await Account.count(accountCondition)
     if (accountCount === 0) {
-      await Account.create({ name: 'Account', balance: 0, userId: userId })
+      await Account.create({ name: 'Account', balance: 0, UserId: userId })
       console.log('Default account created.')
     } else {
       console.log('Valid account found, skipping creation of default account')
