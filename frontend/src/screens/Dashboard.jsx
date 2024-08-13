@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Center, Container, Spinner, Stack } from '@chakra-ui/react'
+import { Spinner, Stack, Heading } from '@chakra-ui/react'
 import AccountBalance from '../components/AccountBalance'
-import { backendUrl, getAuthToken } from '../utils/auth'
+import { getAuthToken } from '../utils/auth'
+import { backendUrl } from '../utils/backend'
 
 function Dashboard() {
   const [account, setAccount] = useState(null)
@@ -13,7 +14,7 @@ function Dashboard() {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${await getAuthToken()}`,
+            Authorization: `Bearer ${getAuthToken()}`,
           },
         })
         const body = await response.json()
@@ -28,15 +29,12 @@ function Dashboard() {
   const DashboardContent = !account ? (
     <Spinner size='xl' />
   ) : (
-    <AccountBalance balance={account.balance} />
+    <>
+      <Heading mb={6}>Dashboard</Heading>
+      <AccountBalance balance={account.balance} />
+    </>
   )
 
-  return (
-    <Center w='100vw' h='100vh' p={3}>
-      <Container>
-        <Stack>{DashboardContent}</Stack>
-      </Container>
-    </Center>
-  )
+  return <Stack>{DashboardContent}</Stack>
 }
 export default Dashboard

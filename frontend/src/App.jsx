@@ -1,15 +1,11 @@
 import { useState, useEffect } from 'react'
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from 'react-router-dom'
-import { checkAuth } from './utils/auth'
+import { Container } from '@chakra-ui/react'
+import { BrowserRouter as Router } from 'react-router-dom'
 
+import { checkAuth } from './utils/auth'
 import LoadingScreen from './screens/LoadingScreen'
-import LoginForm from './screens/LoginForm'
-import Dashboard from './screens/Dashboard'
+import AppRouter from './components/AppRouter'
+import Navbar from './components/NavBar'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState('false')
@@ -21,7 +17,6 @@ function App() {
       setIsLoggedIn(loggedIn)
       setIsLoading(false)
     }
-
     authenticate()
   }, [])
 
@@ -31,26 +26,10 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route
-          path='/login'
-          element={
-            !isLoggedIn ? (
-              <LoginForm setIsLoggedIn={setIsLoggedIn} />
-            ) : (
-              <Navigate to='/dashboard' />
-            )
-          }
-        />
-        <Route
-          path='/dashboard'
-          element={isLoggedIn ? <Dashboard /> : <Navigate to='/login' />}
-        />
-        <Route
-          path='*'
-          element={<Navigate to={isLoggedIn ? '/dashboard' : '/login'} />}
-        />
-      </Routes>
+      <Navbar isLoggedIn={isLoggedIn} />
+      <Container p={12}>
+        <AppRouter isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      </Container>
     </Router>
   )
 }

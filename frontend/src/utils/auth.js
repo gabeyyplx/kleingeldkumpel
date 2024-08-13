@@ -1,4 +1,4 @@
-export const backendUrl = import.meta.env.VITE_BACKEND_URL
+import { backendUrl } from './backend'
 
 export const checkAuth = async () => {
   try {
@@ -6,7 +6,7 @@ export const checkAuth = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${await getAuthToken()}`,
+        Authorization: `Bearer ${getAuthToken()}`,
       },
     })
     if (response.status === 200) return true
@@ -16,6 +16,6 @@ export const checkAuth = async () => {
   return false
 }
 
-export const getAuthToken = async () => {
+export const getAuthToken = () => {
   return localStorage.getItem('token')
 }

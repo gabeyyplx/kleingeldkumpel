@@ -9,6 +9,7 @@ import {
   Heading,
   useToast,
 } from '@chakra-ui/react'
+import { backendUrl } from '../utils/backend'
 
 const LoginForm = ({ setIsLoggedIn }) => {
   const [username, setUsername] = useState('')
@@ -21,7 +22,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
     setIsLoading(true)
 
     try {
-      const response = await fetch('http://localhost:3000/api/users/login', {
+      const response = await fetch(`${backendUrl}/api/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -63,34 +64,32 @@ const LoginForm = ({ setIsLoggedIn }) => {
   }
 
   return (
-    <Center w='100%' minH='100vh'>
-      <Box maxW='sm' mx='auto' mt={6}>
-        <Heading as='h1' mb={9}>
-          💰 kleingeldkumpel
-        </Heading>
-        <form onSubmit={handleSubmit}>
-          <FormControl id='username'>
-            <FormLabel>Username</FormLabel>
-            <Input
-              type='text'
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-            />
-          </FormControl>
-          <FormControl id='password' mt={3}>
-            <FormLabel>Password</FormLabel>
-            <Input
-              type='password'
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </FormControl>
-          <Button mt={3} type='submit' isLoading={isLoading}>
-            Login
-          </Button>
-        </form>
-      </Box>
-    </Center>
+    <Box maxW='sm' mx='auto' mt={6}>
+      <Heading as='h1' mb={9}>
+        💰 kleingeldkumpel
+      </Heading>
+      <form onSubmit={handleSubmit}>
+        <FormControl id='username'>
+          <FormLabel>Username</FormLabel>
+          <Input
+            type='text'
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+          />
+        </FormControl>
+        <FormControl id='password' mt={3}>
+          <FormLabel>Password</FormLabel>
+          <Input
+            type='password'
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+        </FormControl>
+        <Button mt={3} type='submit' isLoading={isLoading}>
+          Login
+        </Button>
+      </form>
+    </Box>
   )
 }
 
