@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Center, Container, Spinner, Stack } from '@chakra-ui/react'
 import AccountBalance from '../components/AccountBalance'
-import { getAuthToken } from '../utils/auth'
+import { backendUrl, getAuthToken } from '../utils/auth'
 
 function Dashboard() {
   const [account, setAccount] = useState(null)
@@ -9,7 +9,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchAccount = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/accounts/1', {
+        const response = await fetch(`${backendUrl}/api/accounts/1`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -18,7 +18,6 @@ function Dashboard() {
         })
         const body = await response.json()
         setAccount(body)
-        console.log(body)
       } catch (error) {
         console.log('Error trying to fetch account:' + error)
       }

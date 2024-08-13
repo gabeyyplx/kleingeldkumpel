@@ -1,5 +1,19 @@
+export const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 export const checkAuth = async () => {
-  return localStorage.getItem('token') ? true : false
+  try {
+    const response = await fetch(`${backendUrl}/api/users/verify-token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${await getAuthToken()}`,
+      },
+    })
+    if (response.status === 200) return true
+  } catch (error) {
+    console.log('Error trying to verify token:' + error)
+  }
+  return false
 }
 
 export const getAuthToken = async () => {

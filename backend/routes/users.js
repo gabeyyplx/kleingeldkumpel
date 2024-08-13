@@ -2,6 +2,7 @@ const express = require('express')
 const argon2 = require('argon2')
 const jwt = require('jsonwebtoken')
 const { User } = require('../models')
+const authenticate = require('../utils/auth')
 const router = express.Router()
 
 const secret = process.env.JWT_SECRET
@@ -33,6 +34,10 @@ router.post('/login', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
+})
+
+router.post('/verify-token', authenticate, (req, res) => {
+  res.status(200).send({ message: 'Token is valid' })
 })
 
 module.exports = router
