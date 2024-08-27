@@ -1,5 +1,5 @@
 const express = require('express')
-const { Transaction, Account } = require('../models')
+const { Transaction, Account, Category } = require('../models')
 const authenticate = require('../utils/auth')
 const { Op } = require('sequelize')
 
@@ -23,10 +23,7 @@ router.post('/', authenticate, async (req, res) => {
 router.get('/', authenticate, async (req, res) => {
   try {
     const transactions = await Transaction.findAll({
-      include: {
-        model: Account,
-        where: { UserId: req.user.id },
-      },
+      include: [Account, Category],
     })
     res.status(200).json(transactions)
   } catch (error) {

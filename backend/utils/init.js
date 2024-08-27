@@ -1,5 +1,5 @@
 const argon2 = require('argon2')
-const { User, Account } = require('../models')
+const { User, Account, Category } = require('../models')
 
 async function createDefaultUserAndAccount() {
   try {
@@ -33,7 +33,45 @@ async function createDefaultUserAndAccount() {
   }
 }
 
-const initFunctions = [createDefaultUserAndAccount]
+async function createDefaultCategories() {
+  try {
+    const categoryCount = await Category.count()
+    if (categoryCount > 0) {
+      console.log(
+        'At least one category found, skipping default category creation'
+      )
+      return
+    }
+    const predefinedCategories = [
+      {
+        symbol: '🛒',
+        name: 'Groceries',
+      },
+      {
+        symbol: '🚘',
+        name: 'Transportation',
+      },
+      {
+        symbol: '🛍️',
+        name: 'Leisure',
+      },
+      {
+        symbol: '🐖',
+        name: 'Saving & Investing',
+      },
+      {
+        symbol: '💪',
+        name: 'Work',
+      },
+    ]
+    await Category.bulkCreate(predefinedCategories)
+    console.log('Default categories created')
+  } catch (error) {
+    console.error('Error creating default categories:', error)
+  }
+}
+
+const initFunctions = [createDefaultUserAndAccount, createDefaultCategories]
 
 async function initialize() {
   for (const initFunction of initFunctions) {
