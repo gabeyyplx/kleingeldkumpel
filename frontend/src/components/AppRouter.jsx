@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from 'react-router-dom'
 import LoginForm from '../screens/LoginForm'
 import Dashboard from '../screens/Dashboard'
 import AddTransaction from '../screens/AddTransaction'
+import TransactionList from '../screens/TransactionList'
 
 const AppRouter = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
@@ -19,6 +20,10 @@ const AppRouter = ({ isLoggedIn, setIsLoggedIn }) => {
       <Route
         path='/dashboard'
         element={isLoggedIn ? <Dashboard /> : <Navigate to='/login' />}
+      />
+      <Route
+        path='/transactions'
+        element={isLoggedIn ? <TransactionList /> : <Navigate to='/login' />}
       />
       <Route
         path='/add-transaction'

@@ -18,11 +18,16 @@ const Navbar = ({ isLoggedIn }) => {
             💰
           </Text>
         </ChakraLink>
-        <ChakraLink as={ReactRouterLink} to='/add-transaction'>
-          <Button>
-            <AddIcon mr={6} boxSize={16} /> <Text>Add transaction</Text>
-          </Button>
-        </ChakraLink>
+        <Flex align='center' gap={8}>
+          <ChakraLink as={ReactRouterLink} to='/transactions'>
+            <Text>All Transactions</Text>
+          </ChakraLink>
+          <ChakraLink as={ReactRouterLink} to='/add-transaction'>
+            <Button>
+              <AddIcon mr={6} boxSize={16} /> <Text>Add transaction</Text>
+            </Button>
+          </ChakraLink>
+        </Flex>
       </Flex>
     </Box>
   )
