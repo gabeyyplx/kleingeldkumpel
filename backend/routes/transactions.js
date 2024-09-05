@@ -109,9 +109,9 @@ router.put('/:id', authenticate, async (req, res) => {
     if (transaction) {
       const previousValue = transaction.value
       await transaction.update(req.body)
-      const account = account.findByPk(transaction.AccountId)
+      const account = await Account.findByPk(transaction.AccountId)
       await account.update({
-        balance: account.balance + (req.body.value - previousValue),
+        balance: account.balance + (transaction.value - previousValue),
       })
       res.status(200).json(transaction)
     } else {
@@ -133,6 +133,10 @@ router.delete('/:id', authenticate, async (req, res) => {
       },
     })
     if (transaction) {
+      const account = await Account.findByPk(transaction.AccountId)
+      await account.update({
+        balance: account.balance - transaction.value,
+      })
       await transaction.destroy()
       res.status(204).end()
     } else {
