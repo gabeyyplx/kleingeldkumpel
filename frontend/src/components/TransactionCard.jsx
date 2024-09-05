@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Text, Badge } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Flex,
+  Text,
+  Badge,
+  Link as ChakraLink,
+} from '@chakra-ui/react'
+import { Link as ReactRouterLink } from 'react-router-dom'
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
 
 const TransactionCard = ({ transaction, onEdit, onDelete }) => {
@@ -41,15 +49,20 @@ const TransactionCard = ({ transaction, onEdit, onDelete }) => {
           </Text>
         </Box>
         <Flex direction='column' justify='space-between'>
-          <Button
-            onClick={onEdit}
-            size='sm'
-            colorScheme='blue'
-            leftIcon={<EditIcon />}
-            mb={2}
+          <ChakraLink
+            as={ReactRouterLink}
+            to={`/edit-transaction/${transaction.id}`}
           >
-            Edit
-          </Button>
+            <Button
+              onClick={onEdit}
+              size='sm'
+              colorScheme='blue'
+              leftIcon={<EditIcon />}
+              mb={2}
+            >
+              Edit
+            </Button>
+          </ChakraLink>
           <Button
             onClick={onDelete}
             size='sm'

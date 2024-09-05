@@ -48,10 +48,6 @@ const TransactionsList = () => {
     fetchTransactions()
   }, [])
 
-  const handleEdit = (id) => {
-    console.log(`Editing: ${id}`)
-  }
-
   const handleDelete = (id) => {
     setSelectedTransactionId(id)
     onOpen()
@@ -105,7 +101,6 @@ const TransactionsList = () => {
         <TransactionCard
           key={transaction.id}
           transaction={transaction}
-          onEdit={() => handleEdit(transaction.id)}
           onDelete={() => handleDelete(transaction.id)}
         />
       ))}

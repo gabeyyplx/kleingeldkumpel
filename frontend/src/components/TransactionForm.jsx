@@ -10,12 +10,22 @@ import {
 import { useState, useEffect } from 'react'
 import { backendUrl } from '../utils/backend'
 
-const TransactionForm = ({ onSubmit }) => {
+const TransactionForm = ({ onSubmit, transaction }) => {
   const [name, setName] = useState('')
   const [amount, setAmount] = useState('')
-  const [category, setCategory] = useState(null)
+  const [category, setCategory] = useState(0) // Otherwise Chakra gets angery
+  const [categoriesLoaded, setCategoriesLoaded] = useState(false)
   const [isExpense, setIsExpense] = useState(true) // Default to expense
   const [availableCategories, setAvailableCategories] = useState([])
+
+  useEffect(() => {
+    if (transaction && categoriesLoaded) {
+      setName(transaction.name)
+      setAmount(transaction.value)
+      setIsExpense(transaction.value < 0)
+      setCategory(transaction.CategoryId)
+    }
+  }, [transaction, categoriesLoaded])
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -30,6 +40,7 @@ const TransactionForm = ({ onSubmit }) => {
         }
         const data = await response.json()
         setAvailableCategories(data)
+        setCategoriesLoaded(true)
       } catch (error) {
         console.log(`Error while fetching categories: ${error.messages}`)
       }
@@ -86,6 +97,7 @@ const TransactionForm = ({ onSubmit }) => {
         <Select
           onChange={(e) => setCategory(e.target.value)}
           placeholder='Choose category'
+          value={category}
         >
           {availableCategories.map((category) => (
             <option key={category.id} value={category.id}>
@@ -96,7 +108,8 @@ const TransactionForm = ({ onSubmit }) => {
       </FormControl>
 
       <Button mt={4} colorScheme={isExpense ? 'red' : 'green'} type='submit'>
-        {isExpense ? 'Add Expense' : 'Add Income'}
+        {transaction ? 'Update ' : 'Add '}
+        {isExpense ? 'Expense' : 'Income'}
       </Button>
     </Box>
   )
