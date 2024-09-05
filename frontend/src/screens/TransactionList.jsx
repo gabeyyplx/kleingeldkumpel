@@ -16,11 +16,9 @@ const TransactionsList = () => {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         })
-
         if (!response.ok) {
           throw new Error('Error while fetching transactions')
         }
-
         const data = await response.json()
         setTransactions(data)
         console.log(data)
@@ -56,9 +54,7 @@ const TransactionsList = () => {
       {transactions.map((transaction) => (
         <TransactionCard
           key={transaction.id}
-          title={transaction.name}
-          amount={transaction.value}
-          category={transaction.Category}
+          transaction={transaction}
           onEdit={() => handleEdit(transaction.id)}
           onDelete={() => handleDelete(transaction.id)}
         />

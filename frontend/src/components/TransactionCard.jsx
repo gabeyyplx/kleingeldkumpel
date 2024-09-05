@@ -1,12 +1,12 @@
 import { Box, Button, Flex, Text, Badge } from '@chakra-ui/react'
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
 
-const TransactionCard = ({ title, amount, category, onEdit, onDelete }) => {
+const TransactionCard = ({ transaction, onEdit, onDelete }) => {
   let badge = null
-  if (category) {
+  if (transaction.Category) {
     badge = (
       <Badge mt={2} colorScheme='purple'>
-        {category.symbol} {category.name}
+        {transaction.Category.symbol} {transaction.Category.name}
       </Badge>
     )
   }
@@ -22,12 +22,23 @@ const TransactionCard = ({ title, amount, category, onEdit, onDelete }) => {
       <Flex justify='space-between' align='center'>
         <Box>
           <Text fontSize='lg' fontWeight='bold'>
-            {title}
+            {transaction.name}
           </Text>
-          <Text fontSize='2xl' color={amount < 0 ? 'red.500' : 'green.500'}>
-            {amount < 0 ? `-${Math.abs(amount)}` : `${amount}`}
+          <Text
+            fontSize='2xl'
+            color={transaction.value < 0 ? 'red.500' : 'green.500'}
+          >
+            {transaction.value < 0
+              ? `-${Math.abs(transaction.value)}`
+              : `+${transaction.value}`}
           </Text>
           {badge}
+          <Text fontSize='sm'>
+            {new Date(transaction.timestamp).toLocaleString('de-DE', {
+              dateStyle: 'medium',
+              timeStyle: 'medium',
+            })}
+          </Text>
         </Box>
         <Flex direction='column' justify='space-between'>
           <Button
