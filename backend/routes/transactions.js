@@ -24,6 +24,7 @@ router.get('/', authenticate, async (req, res) => {
   try {
     const transactions = await Transaction.findAll({
       include: [Account, Category],
+      order: [['timestamp', 'DESC']],
     })
     res.status(200).json(transactions)
   } catch (error) {
