@@ -13,6 +13,9 @@ router.post('/', authenticate, async (req, res) => {
       return res.status(403).json({ error: 'Access denied' })
     }
     const transaction = await Transaction.create(req.body)
+    await account.update({
+      balance: account.balance + transaction.value,
+    })
     res.status(201).json(transaction)
   } catch (error) {
     res.status(400).json({ error: error.message })
@@ -104,7 +107,12 @@ router.put('/:id', authenticate, async (req, res) => {
       },
     })
     if (transaction) {
+      const previousValue = transaction.value
       await transaction.update(req.body)
+      const account = account.findByPk(transaction.AccountId)
+      await account.update({
+        balance: account.balance + (req.body.value - previousValue),
+      })
       res.status(200).json(transaction)
     } else {
       res.status(404).json({ error: 'Transaction not found' })
