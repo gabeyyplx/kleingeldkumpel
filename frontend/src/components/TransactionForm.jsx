@@ -14,6 +14,7 @@ const TransactionForm = ({ onSubmit, transaction }) => {
   const [name, setName] = useState('')
   const [amount, setAmount] = useState('')
   const [category, setCategory] = useState(0) // Otherwise Chakra gets angery
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10))
   const [categoriesLoaded, setCategoriesLoaded] = useState(false)
   const [isExpense, setIsExpense] = useState(true) // Default to expense
   const [availableCategories, setAvailableCategories] = useState([])
@@ -24,6 +25,7 @@ const TransactionForm = ({ onSubmit, transaction }) => {
       setAmount(transaction.value)
       setIsExpense(transaction.value < 0)
       setCategory(transaction.CategoryId)
+      setDate(new Date().toISOString().slice(0, 10))
     }
   }, [transaction, categoriesLoaded])
 
@@ -54,6 +56,7 @@ const TransactionForm = ({ onSubmit, transaction }) => {
     onSubmit({
       name: name,
       value: finalAmount,
+      timestamp: date,
       AccountId: 1,
       CategoryId: category,
     })
@@ -105,6 +108,15 @@ const TransactionForm = ({ onSubmit, transaction }) => {
             </option>
           ))}
         </Select>
+      </FormControl>
+
+      <FormControl mb={4} id='timestamp' isRequired>
+        <FormLabel>Date/Time</FormLabel>
+        <Input
+          type='date'
+          onChange={(e) => setDate(e.target.value)}
+          value={date}
+        />
       </FormControl>
 
       <Button mt={4} colorScheme={isExpense ? 'red' : 'green'} type='submit'>
