@@ -13,7 +13,7 @@ const TransactionCard = ({ transaction, onEdit, onDelete }) => {
   let badge = null
   if (transaction.Category) {
     badge = (
-      <Badge mt={2} colorScheme='purple'>
+      <Badge colorScheme='blue'>
         {transaction.Category.symbol} {transaction.Category.name}
       </Badge>
     )
@@ -35,18 +35,18 @@ const TransactionCard = ({ transaction, onEdit, onDelete }) => {
           <Text
             fontSize='2xl'
             color={transaction.value < 0 ? 'red.500' : 'green.500'}
+            mb={2}
           >
             {transaction.value < 0
               ? `-${Math.abs(transaction.value)}`
               : `+${transaction.value}`}
           </Text>
-          {badge}
-          <Text fontSize='sm'>
-            {new Date(transaction.timestamp).toLocaleString('de-DE', {
+          <Text fontSize='sm' mb={2}>
+            {new Date(transaction.timestamp).toLocaleDateString('de-DE', {
               dateStyle: 'medium',
-              timeStyle: 'medium',
             })}
           </Text>
+          {badge}
         </Box>
         <Flex direction='column' justify='space-between'>
           <ChakraLink

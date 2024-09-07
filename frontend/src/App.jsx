@@ -27,7 +27,7 @@ function App() {
   return (
     <Router>
       <Navbar isLoggedIn={isLoggedIn} />
-      <Container p={12}>
+      <Container maxW='960px' p={12}>
         <AppRouter isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       </Container>
     </Router>
