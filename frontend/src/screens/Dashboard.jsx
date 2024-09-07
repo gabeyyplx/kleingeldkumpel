@@ -8,6 +8,7 @@ function Dashboard() {
   const [account, setAccount] = useState(null)
 
   useEffect(() => {
+    if (account) return
     const fetchAccount = async () => {
       try {
         const response = await fetch(`${backendUrl}/api/accounts/1`, {
@@ -27,7 +28,7 @@ function Dashboard() {
   }, [])
 
   const DashboardContent = !account ? (
-    <Spinner size='xl' />
+    <Spinner mt={64} alignSelf='center' size='xl' />
   ) : (
     <>
       <Heading mb={6}>Dashboard</Heading>

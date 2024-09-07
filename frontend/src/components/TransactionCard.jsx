@@ -55,6 +55,7 @@ const TransactionCard = ({ transaction, onEdit, onDelete }) => {
           >
             <Button
               onClick={onEdit}
+              minW='100%'
               size='sm'
               colorScheme='blue'
               leftIcon={<EditIcon />}
