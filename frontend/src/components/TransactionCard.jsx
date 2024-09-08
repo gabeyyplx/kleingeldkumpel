@@ -10,14 +10,14 @@ import { Link as ReactRouterLink } from 'react-router-dom'
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
 
 const TransactionCard = ({ transaction, onEdit, onDelete }) => {
-  let badge = null
-  if (transaction.Category) {
-    badge = (
-      <Badge colorScheme='blue'>
-        {transaction.Category.symbol} {transaction.Category.name}
-      </Badge>
-    )
-  }
+  if (!transaction) return <>No Transaction</>
+
+  let badge = transaction.Category ? (
+    <Badge colorScheme='blue'>
+      {transaction.Category.symbol} {transaction.Category.name}
+    </Badge>
+  ) : null
+
   return (
     <Box
       borderWidth='1px'
