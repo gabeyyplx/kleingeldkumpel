@@ -10,7 +10,7 @@ import {
 import { useState, useEffect } from 'react'
 import { backendUrl } from '../utils/backend'
 
-const TransactionForm = ({ onSubmit, transaction }) => {
+const TransactionForm = ({ onSubmit, transaction, categories }) => {
   const [name, setName] = useState('')
   const [amount, setAmount] = useState('')
   const [category, setCategory] = useState(0) // Otherwise Chakra gets angery
@@ -30,6 +30,12 @@ const TransactionForm = ({ onSubmit, transaction }) => {
   }, [transaction, categoriesLoaded])
 
   useEffect(() => {
+    if (categories) {
+      setAvailableCategories(categories)
+      setCategoriesLoaded(true)
+      return
+    }
+
     const fetchCategories = async () => {
       try {
         const response = await fetch(`${backendUrl}/api/categories`, {

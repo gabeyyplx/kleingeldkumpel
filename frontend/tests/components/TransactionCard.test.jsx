@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import TransactionCard from '../../src/components/TransactionCard'
 import { ChakraProvider } from '@chakra-ui/react'
-import { MemoryRouter, Routes } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import React from 'react'
 
 const transaction = {
