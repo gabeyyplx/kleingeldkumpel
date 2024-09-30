@@ -19,7 +19,7 @@ const authenticate = async (req, res, next) => {
     }
     next()
   } catch (error) {
-    res.sendStatus(403)
+    res.status(403).send({ error: error.message })
   }
 }
 

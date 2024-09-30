@@ -1,5 +1,5 @@
 const express = require('express')
-const { Transaction, Account } = require('../models')
+const { Transaction, Account, Category } = require('../models')
 const authenticate = require('../utils/auth')
 const { Op } = require('sequelize')
 
@@ -13,6 +13,9 @@ router.post('/', authenticate, async (req, res) => {
       return res.status(403).json({ error: 'Access denied' })
     }
     const transaction = await Transaction.create(req.body)
+    await account.update({
+      balance: account.balance + transaction.value,
+    })
     res.status(201).json(transaction)
   } catch (error) {
     res.status(400).json({ error: error.message })
@@ -23,10 +26,8 @@ router.post('/', authenticate, async (req, res) => {
 router.get('/', authenticate, async (req, res) => {
   try {
     const transactions = await Transaction.findAll({
-      include: {
-        model: Account,
-        where: { UserId: req.user.id },
-      },
+      include: [Account, Category],
+      order: [['timestamp', 'DESC']],
     })
     res.status(200).json(transactions)
   } catch (error) {
@@ -106,7 +107,12 @@ router.put('/:id', authenticate, async (req, res) => {
       },
     })
     if (transaction) {
+      const previousValue = transaction.value
       await transaction.update(req.body)
+      const account = await Account.findByPk(transaction.AccountId)
+      await account.update({
+        balance: account.balance + (transaction.value - previousValue),
+      })
       res.status(200).json(transaction)
     } else {
       res.status(404).json({ error: 'Transaction not found' })
@@ -127,6 +133,10 @@ router.delete('/:id', authenticate, async (req, res) => {
       },
     })
     if (transaction) {
+      const account = await Account.findByPk(transaction.AccountId)
+      await account.update({
+        balance: account.balance - transaction.value,
+      })
       await transaction.destroy()
       res.status(204).end()
     } else {
