@@ -24,7 +24,7 @@ const Navbar = ({ isLoggedIn }) => {
           </ChakraLink>
           <ChakraLink as={ReactRouterLink} to='/add-transaction'>
             <Button>
-              <AddIcon mr={6} boxSize={16} /> <Text>Add transaction</Text>
+              <AddIcon mr={2} boxSize={4} /> <Text>Add transaction</Text>
             </Button>
           </ChakraLink>
         </Flex>
