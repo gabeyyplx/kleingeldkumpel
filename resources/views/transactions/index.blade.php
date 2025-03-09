@@ -4,6 +4,7 @@
 
 @section('content')
     <h1>Transactions</h1>
+    <h2>Account balance: {{ number_format($account->balance, 2, ',', '.') }} €</h2>
     <a href="{{ route('transactions.create') }}">+ Add Transaction</a>
 
     @if (session('success'))

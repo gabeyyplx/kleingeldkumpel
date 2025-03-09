@@ -38,81 +38,10 @@ a {
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-}
-
-.transaction .icon {
-    font-size: 2em;
-    flex-grow: 1;
-}
-
-.transaction .name-date {
-    flex-grow: 7;
-}
-
-.transaction .name {
-    font-weight: bold;
-}
-
-.transaction .amount {
-    flex-grow: 2;
-    text-align: right;
-    font-size: 1.25em;
-    font-weight: bold;
-}
-
-.box {
-    border-radius: 8px;
-    border: 2px solid black;
-    background-color: white;
-    box-shadow: 4px 4px 0px black;
-    margin-bottom: 30px;
-    padding: 15px 10px;
-}
-
-.button {
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #f0f0f0;
-    border: 2px solid black;
-    transition: all 0.2s;
-    box-shadow: 4px 4px 0px transparent;
-    font-weight: bold;
-    display: inline-block;
-    margin-bottom: 15px;
-}
-
-.button:hover {
-    box-shadow: 4px 4px 0px black;
-}
-
-.add {
-    background-color: #2fff2f;
-    color: black;
-}
-
-.remove {
-    background-color: #ff4911;
-    color: #fff;
-}
-
-.success {
-    color: black;
-    background-color: #bafca2;
-}
-
-.error {
-    color: black;
-    background-color: #ffa07a;
 }
 
 .form-group {
-    margin-bottom: 15px;
-}
-
-input, select {
-    border: 2px solid black;
-    border-radius: 8px;
-    height: 2rem;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
 }

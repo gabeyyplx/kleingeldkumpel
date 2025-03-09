@@ -14,8 +14,9 @@ class TransactionController extends Controller
      */
     public function index()
     {
+        $account = Account::first();
         $transactions = Transaction::with('category')->latest()->get();
-        return view('transactions.index', compact('transactions'));
+        return view('transactions.index', compact('transactions', 'account'));
     }
 
     /**
@@ -40,8 +41,10 @@ class TransactionController extends Controller
             'name' => 'required|max:255',
             'date' => 'required|date',
         ]);
-
         Transaction::create($request->all());
+        $account = Account::find($request->account_id);
+        $account->balance += $request->value;
+        $account->save();
         return redirect()->route('transactions.index')->with('success', 'Transaction created successfully.');
     }
 
