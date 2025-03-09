@@ -3,8 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Category;
+use App\Models\Account;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +16,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::firstOrCreate([
+            'name' => 'user',
+            'email' => 'user@email.com',
+            'password' => Hash::make('reallysecurepassword')
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $categories = [
+            '🔁' => 'Waging', 
+            '🐖' => 'Saving', 
+            '🛒' => 'Groceries', 
+            '🏠' => 'Housing', 
+            '🚗' => 'Transportation', 
+            '❤️‍🩹' => 'Health', 
+            '🛡️' => 'Insurance', 
+            '😂' => 'Recreation', 
+            '🤷' => 'Other'
+        ];
+        foreach($categories as $icon => $category) {
+           Category::firstOrCreate([
+                'icon' => $icon,
+                'name' => $category
+            ]);
+        }
+
+        Account::firstOrCreate([
+            'name' => 'Account',
+            'balance' => 0,
+            'user_id' => 1,
+            'currency' => '€'
         ]);
     }
 }

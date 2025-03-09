@@ -8,7 +8,7 @@ class Category extends Model
 {
     protected $fillable = [
         'name',
-        'symbol'
+        'icon'
     ];
     
     public function transactions() {

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('value', 10, 2);
             $table->date('date');
             $table->foreignIdFor(Category::class)->constrained();
-            $table->foreignId(Account::class)->constrained();
+            $table->foreignIdFor(Account::class)->constrained();
             $table->timestamps();
         });
     }
