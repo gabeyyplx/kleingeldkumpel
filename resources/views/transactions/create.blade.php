@@ -5,7 +5,7 @@
 @section('content')
     <h1>New Transaction</h1>
     @if ($errors->any())
-        <div class="alert error">
+        <div class="box error">
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <form action="{{ route('transactions.store') }}" method="POST">
+    <form class="box" action="{{ route('transactions.store') }}" method="POST">
         @csrf
          <div class="form-group">
             <label for="value">Amount</label>
@@ -37,6 +37,6 @@
             <input type="date" name="date" id="date" value="{{ date('Y-m-d') }}">
         </div>
         <input type="hidden" name="account_id" value="{{ $account->id }}">
-        <button type="submit">Save</button>
+        <button class="button add" type="submit">Save</button>
     </form>
 @endsection

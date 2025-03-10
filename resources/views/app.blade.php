@@ -17,7 +17,7 @@
                 @yield('content')
             </div>
 
-            <div class="menu">
+            <div class="menu box">
                 <a href="{{ route('dashboard') }}">Dashboard</a>
                 <a href="{{ route('transactions.index') }}">Transactions</a>
             </div>

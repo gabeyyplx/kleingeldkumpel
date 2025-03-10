@@ -4,20 +4,29 @@
 
 @section('content')
     <h1>Transactions</h1>
-    <h2>Account balance: {{ number_format($account->balance, 2, ',', '.') }} €</h2>
-    <a href="{{ route('transactions.create') }}">+ Add Transaction</a>
+    <div class="box">
+        <div class="row">
+            <div class="balance">Account balance: {{ number_format($account->balance, 2, ',', '.') }} €</div>
+            <a class="button add" href="{{ route('transactions.create') }}">+ Add Transaction</a>
+        </div>
+        </div>
 
     @if (session('success'))
-        <div class="alert success">{{ session('success') }}</div>
+        <div class="box success">{{ session('success') }}</div>
     @endif
 
     @foreach ($transactions as $transaction)
-                <div class="transaction">
-                    <div class="name">
-                        {{$transaction->category->icon}} {{ $transaction->name }}
+                <div class="transaction box">
+                    <div class="icon">
+                        {{$transaction->category->icon}} 
                     </div>
-                    <div class="date">
-                        {{ $transaction->date }}
+                    <div class="name-date">
+                        <div class="name">
+                            {{ $transaction->name }}
+                        </div>
+                        <div class="date">
+                            {{ date_format(date_create($transaction->date), 'd.m.Y') }}
+                        </div>
                     </div>
                     <div class="amount">
                         {{ number_format($transaction->value, 2, ',', '.') }} €
