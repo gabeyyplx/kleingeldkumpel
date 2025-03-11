@@ -16,6 +16,7 @@
     @endif
 
     @foreach ($transactions as $transaction)
+            <a href="{{ route('transactions.edit', $transaction->id) }}">
                 <div class="transaction box">
                     <div class="icon">
                         {{$transaction->category->icon}} 
@@ -32,5 +33,6 @@
                         {{ number_format($transaction->value, 2, ',', '.') }} €
                     </div>
                 </div>
+            </a>
     @endforeach          
 @endsection

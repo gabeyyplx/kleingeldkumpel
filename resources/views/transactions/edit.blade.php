@@ -3,7 +3,7 @@
 @section('title', 'New Transaction')
 
 @section('content')
-    <h1>New Transaction</h1>
+    <h1>Edit Transaction</h1>
     @if ($errors->any())
         <div class="box error">
             <ul>
@@ -15,10 +15,11 @@
     @endif
 
     @include('transactions.form', [
-        'action' => route('transactions.store'),
-        'method' => null,
-        'transaction' => null,
+        'action' => route('transactions.update', $transaction),
+        'method' => 'PUT',
+        'transaction' => $transaction,
         'categories' => $categories,
-        'buttonText' => 'Save'
+        'account' => $account,
+        'buttonText' => 'Update'
     ])
 @endsection

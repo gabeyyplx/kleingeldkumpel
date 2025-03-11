@@ -53,9 +53,14 @@ a {
     font-weight: bold;
 }
 
+.transaction .date {
+    font-size: 0.9rem;
+    font-weight: lighter;
+}
+
 .transaction .amount {
     text-align: right;
-    font-weight: bold;
+    font-weight: 
     flex: 3 0 0;
 }
 
@@ -67,7 +72,7 @@ a {
     padding: 15px 10px;
 }
 
-.button {
+.button, input[type="submit"] {
     padding: 5px 10px;
     border-radius: 8px;
     background-color: #f0f0f0;
@@ -76,6 +81,7 @@ a {
     box-shadow: 4px 4px 0px transparent;
     font-weight: bold;
     display: inline-block;
+    font-size: 1rem;
 }
 
 .button:hover {
@@ -102,6 +108,10 @@ a {
     background-color: #ffa07a;
 }
 
+form {
+    display: inline;
+}
+
 .form-group {
     margin-bottom: 15px;
 }
@@ -109,6 +119,7 @@ a {
 input, select {
     border: 2px solid black;
     border-radius: 8px;
+    padding: 5px 10px;
     height: 2rem;
     width: 100%;
 }

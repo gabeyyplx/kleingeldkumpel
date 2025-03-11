@@ -53,7 +53,7 @@ class TransactionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -61,7 +61,10 @@ class TransactionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $account = Account::first();
+        $transaction = Transaction::with('category')->find($id);
+        $categories = Category::all();
+        return view('transactions.edit', compact('transaction', 'categories', 'account'));
     }
 
     /**
@@ -69,7 +72,23 @@ class TransactionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'account_id' => 'required|exists:accounts,id',
+            'value' => 'required|numeric',
+            'name' => 'required|max:255',
+            'date' => 'required|date',
+        ]);
+        $transaction = Transaction::find($id);
+        if($transaction === null) {
+            return redirect()->route('transactions.index')->with('error', 'Transaction not found.');
+        }
+        $difference = $request->value - $transaction->value;
+        $account = Account::find($transaction->account_id);
+        $account->balance += $difference;
+        $account->save();
+        $transaction->update($request->all());
+        return redirect()->route('transactions.index')->with('success', 'Transaction updated successfully.');
     }
 
     /**
@@ -77,6 +96,14 @@ class TransactionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $transaction = Transaction::find($id);
+        if($transaction === null) {
+            return redirect()->route('transactions.index')->with('error', 'Transaction not found.');
+        }
+        $account = Account::find($transaction->account_id);
+        $account->balance -= $transaction->value;
+        $account->save();
+        $transaction->delete();
+        return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully.');
     }
 }
