@@ -3,7 +3,6 @@
 @section('title', 'Transactions')
 
 @section('content')
-    <h1>Transactions</h1>
     <div class="box">
         <div class="row">
             <div class="balance">Account balance: {{ number_format($account->balance, 2, ',', '.') }} €</div>

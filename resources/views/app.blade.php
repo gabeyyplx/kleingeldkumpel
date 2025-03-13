@@ -13,14 +13,13 @@
     </head>
     <body>
         <div class="app">  
+            @include('header')
+
             <div class="content">
                 @yield('content')
             </div>
 
-            <div class="menu box">
-                <a href="{{ route('dashboard') }}">Dashboard</a>
-                <a href="{{ route('transactions.index') }}">Transactions</a>
-            </div>
+           @include('menu')
         </div>
     </body>
 </html>

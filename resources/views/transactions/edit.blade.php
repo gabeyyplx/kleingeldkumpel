@@ -1,9 +1,8 @@
 @extends('app')
 
-@section('title', 'New Transaction')
+@section('title', 'Edit Transaction')
 
 @section('content')
-    <h1>Edit Transaction</h1>
     @if ($errors->any())
         <div class="box error">
             <ul>

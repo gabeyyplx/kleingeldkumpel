@@ -1,8 +1,7 @@
 @extends('app')
 
-@section('title', 'Hello')
+@section('title', 'Dashboard')
 
 @section('content')
-    <h1>Kleingeldkumpel</h1>
-    ja moin       
+    ja moin 👋
 @endsection
