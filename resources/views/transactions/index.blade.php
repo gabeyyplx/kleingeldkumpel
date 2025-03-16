@@ -5,9 +5,12 @@
 @section('content')
     <div class="box">
         <div class="row">
-            <div class="balance">Account balance: {{ number_format($account->balance, 2, ',', '.') }} €</div>
+            <div class="balance">
+                <strong>Account balance:</strong><br> 
+                {{ number_format($account->balance, 2, ',', '.') }} {{ $account->currency }}
+            </div>
             <a class="button add" href="{{ route('transactions.create') }}">+ Add Transaction</a>
-        </div>
+            </div>
         </div>
 
     @if (session('success'))
@@ -29,7 +32,7 @@
                         </div>
                     </div>
                     <div class="amount">
-                        {{ number_format($transaction->value, 2, ',', '.') }} €
+                        {{ number_format($transaction->value, 2, ',', '.') }} {{ $account->currency }}
                     </div>
                 </div>
             </a>
