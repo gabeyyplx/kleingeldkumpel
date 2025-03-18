@@ -17,5 +17,11 @@
         <button class="button" type="submit">Login</button>
     </form>
 </div>
+
+@if($errors->any())
+            <div class="box error">
+                {{ $errors->first() }}
+            </div>
+        @endif
 @endsection
 

@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             if (Auth::check()) {
+                $view->with('user', Auth::user());
                 $view->with('accounts', Account::where('user_id', Auth::id())->get());
             }
         });

@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Account;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $account = Account::first();
+        $user = Auth::user();
+        $account = Account::find($user->current_account);
         $expenses = DB::table('transactions')
             ->join('categories', 'transactions.category_id', '=', 'categories.id')
             ->where('transactions.account_id', $account->id)

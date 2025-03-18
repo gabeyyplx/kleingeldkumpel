@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\Transaction;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -14,8 +15,9 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $account = Account::first();
-        $transactions = Transaction::with('category')->latest()->get();
+        $user = Auth::user();
+        $account = Account::find($user->current_account) ?? Account::where('user_id', $user->id)->first();
+        $transactions = Transaction::where('account_id', $account->id)->with('category')->latest()->get();
         return view('transactions.index', compact('transactions', 'account'));
     }
 
@@ -24,8 +26,9 @@ class TransactionController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+        $account = Account::find($user->current_account) ?? Account::where('user_id', $user->id)->first();
         $categories = Category::all();
-        $account = Account::first();
         return view('transactions.create', compact('categories', 'account'));
     }
 
@@ -34,6 +37,7 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
         $request->validate([
             'category_id' => 'required|exists:categories,id',
             'account_id' => 'required|exists:accounts,id',
@@ -61,7 +65,8 @@ class TransactionController extends Controller
      */
     public function edit(string $id)
     {
-        $account = Account::first();
+        $user = Auth::user();
+        $account = Account::find($user->current_account) ?? Account::where('user_id', $user->id)->first();
         $transaction = Transaction::with('category')->find($id);
         $categories = Category::all();
         return view('transactions.edit', compact('transaction', 'categories', 'account'));

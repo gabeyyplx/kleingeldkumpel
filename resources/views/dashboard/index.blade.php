@@ -5,7 +5,7 @@
 @section('content')
     <div class="box">
         <strong>Account balance:</strong><br>
-        {{ number_format($account->balance, 2, '.', '.') }} {{ $account->currency }}
+        {{ number_format($account->balance, 2, ',', '.') }} {{ $account->currency }}
     </div>
     <div class="box">
         <strong>

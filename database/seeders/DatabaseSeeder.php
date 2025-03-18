@@ -16,23 +16,32 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::firstOrCreate([
+        $user = User::firstOrCreate([
             'name' => 'user',
             'email' => 'user@email.com',
             'password' => Hash::make('reallysecurepassword')
         ]);
 
+        Account::firstOrCreate([
+            'name' => 'Account',
+            'balance' => 0,
+            'user_id' => $user->id,
+            'currency' => '€'
+        ]);
+
         $categories = [
             '🔁' => 'Waging', 
             '🐖' => 'Saving', 
+            '💸' => 'Cash', 
             '🛒' => 'Groceries', 
             '🏠' => 'Housing', 
             '🚗' => 'Transportation', 
             '❤️‍🩹' => 'Health', 
             '🛡️' => 'Insurance', 
-            '😂' => 'Recreation', 
+            '😂' => 'Recreation',
             '🤷' => 'Other'
         ];
+
         foreach($categories as $icon => $category) {
            Category::firstOrCreate([
                 'icon' => $icon,
@@ -40,11 +49,6 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        Account::firstOrCreate([
-            'name' => 'Account',
-            'balance' => 0,
-            'user_id' => 1,
-            'currency' => '€'
-        ]);
+        
     }
 }

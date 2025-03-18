@@ -20,6 +20,11 @@ class AuthController extends Controller
                 'email' => 'Invalid login >:(',
             ]);
         }
+        $user = Auth::user();
+        if($user->current_account === null) {
+            $user->current_account = $user->accounts->first()->id;
+            $user->save();
+        }
         return redirect()->intended('/');
     }
 
