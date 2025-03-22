@@ -7,7 +7,7 @@
         <div class="row">
             <div class="balance">
                 <strong>Account balance:</strong><br> 
-                {{ $formatter->formatCurrency($account->balance, $account) }}
+                {{ $formatter->currency($account->balance) }}
             </div>
             <a class="button add" href="{{ route('transactions.create') }}">+ Add Transaction</a>
             </div>
@@ -28,11 +28,11 @@
                             {{ $transaction->name }}
                         </div>
                         <div class="date">
-                            {{ $formatter->formatDate(date_create($transaction->date), $user) }}
+                            {{ $formatter->date(date_create($transaction->date), $user) }}
                         </div>
                     </div>
                     <div class="amount">
-                        {{ $formatter->formatCurrency($transaction->value, $account) }}
+                        {{ $formatter->currency($transaction->value, $account) }}
                     </div>
                 </div>
             </a>
