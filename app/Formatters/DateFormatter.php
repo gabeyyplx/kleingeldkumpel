@@ -3,18 +3,18 @@
 namespace App\Formatters;
 
 use DateTimeInterface;
-use App\Models\Account;
+use App\Models\User;
 
 final class DateFormatter {
 
-    public static function format(DateTimeInterface $date, Account $account): string {
-        if ($account === null) {
+    public static function format(DateTimeInterface $date, User $user): string {
+        if ($user === null) {
             return $date;
         }
-        $dateFormat = $account->date_format;
+        $dateFormat = $user->date_format;
         if(!$dateFormat) {
             return $date;
         }
-        return date($dateFormat, strtotime($date));
+        return date_format($date, $dateFormat);
     }
 }
