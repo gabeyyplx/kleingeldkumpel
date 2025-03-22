@@ -2,7 +2,7 @@
     <div class="title">
         💰 @yield('title')
     </div>
-    @if(isset($accounts))
+    @if(isset($accounts) && count($accounts) > 1)
     <div class="accounts">
         <form method="POST" action="{{ route('user.updateCurrentAccount') }}">
             @csrf

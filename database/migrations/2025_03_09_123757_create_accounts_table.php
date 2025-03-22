@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->decimal('balance', 10, 2);
             $table->foreignIdFor(User::class)->constrained();
+            $table->char('decimal_separator');
+            $table->char('thousands_separator');
+            $table->enum('currency_position', ['left', 'right']);
             $table->char('currency');
             $table->timestamps();
         });

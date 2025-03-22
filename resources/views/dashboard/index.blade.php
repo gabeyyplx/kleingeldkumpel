@@ -5,16 +5,20 @@
 @section('content')
     <div class="box">
         <strong>Account balance:</strong><br>
-        {{ number_format($account->balance, 2, ',', '.') }} {{ $account->currency }}
+        {{ $CurrencyFormatter::format($account->balance, $account) }}
     </div>
+
+    @if($expenses->pluck('total')->sum() !== 0)
     <div class="box">
         <strong>
-            Expenses since {{ date_format(now()->startOfMonth(), 'd.m.Y') }} </strong>
+            Expenses since {{ $DateFormatter::format(now()->startOfMonth(), $user) }} </strong>
         <canvas 
         id="expensesPieChart"
         data-labels="{{ json_encode($expenses->pluck('name')) }}"
         data-values="{{ json_encode($expenses->pluck('total')) }}"
         ></canvas>
-        Total: {{ number_format(array_sum($expenses->pluck('total')->toArray()), 2, ',', '.')  }} {{ $account->currency }}
+        Total expenses: {{ $CurrencyFormatter::format(abs($expenses->pluck('total')->sum()), $account) }}
     </div>
+    @endif
+
 @endsection
