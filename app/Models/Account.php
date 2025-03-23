@@ -10,6 +10,10 @@ class Account extends Model
         'name',
         'balance',
         'user_id',
+        'currency',
+        'decimal_separator',
+        'thousands_separator',
+        'currency_position'
     ];
     
     public function transactions() {

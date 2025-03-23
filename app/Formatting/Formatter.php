@@ -47,12 +47,13 @@ final class Formatter {
 
     public function date(DateTimeInterface $date): string {
         $user = $this->getUser();
+        $defaultFormat = 'd/m/Y';
         if($user === null) {
-            return $date;
+            return date_format($date, $defaultFormat);
         }
         $dateFormat = $user->date_format;
         if(!$dateFormat) {
-            return $date;
+            return date_format($date, $defaultFormat);
         }
         return date_format($date, $dateFormat);
     }
