@@ -8,11 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Account;
-use App\Formatters\CurrencyFormatter;
-use App\Formatters\DateFormatter;
+use App\Formatting\Formatter;
 
 
-class IncludeObjectsInViews
+class ProvideGlobals
 {
     /**
      * Handle an incoming request.
@@ -23,11 +22,12 @@ class IncludeObjectsInViews
     {
         View::composer('*', function ($view) {
             if (Auth::check()) {
-                $view->with('user', Auth::user());
-                $view->with('accounts', Account::where('user_id', Auth::id())->get());
+                $user = Auth::user();
+                $accounts = Account::where('user_id', $user->id)->get();
+                $currentAccount = Account::find($user->current_account) ?? $accounts->first();
+                $formatter = new Formatter($user, $currentAccount);
+                $view->with(compact('user', 'accounts', 'currentAccount', 'formatter'));
             }
-            $view->with('CurrencyFormatter', new CurrencyFormatter());
-            $view->with('DateFormatter', new DateFormatter());
         });
         return $next($request);
     }

@@ -41,13 +41,18 @@ class TransactionController extends Controller
         $request->validate([
             'category_id' => 'required|exists:categories,id',
             'account_id' => 'required|exists:accounts,id',
-            'value' => 'required|numeric',
+            'value' => 'required|numeric|min:0.01',
+            'type' => 'required|in:expense,income',
             'name' => 'required|max:255',
             'date' => 'required|date',
         ]);
-        Transaction::create($request->all());
-        $account = Account::find($request->account_id);
-        $account->balance += $request->value;
+        $transaction = Transaction::create($request->all());
+        $balanceValue = $transaction->value;
+        if($transaction->type === 'expense') {
+            $balanceValue *= -1;
+        }
+        $account = Account::find($transaction->account_id);
+        $account->balance += $balanceValue;
         $account->save();
         return redirect()->route('transactions.index')->with('success', 'Transaction created successfully.');
     }
@@ -80,7 +85,8 @@ class TransactionController extends Controller
         $request->validate([
             'category_id' => 'required|exists:categories,id',
             'account_id' => 'required|exists:accounts,id',
-            'value' => 'required|numeric',
+            'value' => 'required|numeric|min:0.01',
+            'type' => 'required|in:expense,income',
             'name' => 'required|max:255',
             'date' => 'required|date',
         ]);
@@ -88,7 +94,15 @@ class TransactionController extends Controller
         if($transaction === null) {
             return redirect()->route('transactions.index')->with('error', 'Transaction not found.');
         }
-        $difference = $request->value - $transaction->value;
+        $oldValue = $transaction->value;
+        if($transaction->type === 'expense') {
+            $oldValue *= -1;
+        }
+        $balanceValue = $request->value;
+        if($request->type === 'expense') {
+            $balanceValue *= -1;
+        }
+        $difference = $balanceValue - $oldValue;
         $account = Account::find($transaction->account_id);
         $account->balance += $difference;
         $account->save();
@@ -106,7 +120,11 @@ class TransactionController extends Controller
             return redirect()->route('transactions.index')->with('error', 'Transaction not found.');
         }
         $account = Account::find($transaction->account_id);
-        $account->balance -= $transaction->value;
+        $balanceValue = $transaction->value;
+        if($transaction->type === 'expense') {
+            $balanceValue *= -1;
+        }
+        $account->balance -= $balanceValue;
         $account->save();
         $transaction->delete();
         return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully.');

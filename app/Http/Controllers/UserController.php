@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
    public function updateCurrentAccount(Request $request) {
-      $accountId = $request->input('current_account');
+      $accountId = $request->current_account;
       $user = Auth::user();
       $user->current_account = $accountId;
       $user->save();

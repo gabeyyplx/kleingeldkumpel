@@ -2,9 +2,9 @@
     <form action="{{ $action }}" method="POST">
         @csrf
         @isset($method)
-            @method($method)
+        @method($method)
         @endisset
-         <div class="form-group">
+        <div class="form-group">
             <label for="value">Amount</label>
             <input type="number" name="value" id="value" step="0.01" value="{{ old('value', $transaction->value ?? '')  }}">
         </div>
@@ -13,17 +13,24 @@
             <input type="text" name="name" id="name" value="{{ old('name', $transaction->name ?? '') }}">
         </div>
         <div class="form-group">
+            <label for="type">Type</label>
+            <select name="type" id="type">
+                <option value="expense" @if(old('type', $transaction->type ?? '') === 'expense') selected @endif>Expense</option>
+                <option value="income" @if(old('type', $transaction->type ?? '') === 'income') selected @endif>Income</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label for="category_id">Category</label>
             <select name="category_id" id="category_id">
                 @foreach ($categories as $category)
-                    <option 
-                        value="{{ $category->id }}"
-                        @if(old('category_id', $transaction->category_id ?? '')  === $category->id) 
-                            selected 
-                        @endif
+                <option
+                    value="{{ $category->id }}"
+                    @if(old('category_id', $transaction->category_id ?? '') === $category->id)
+                    selected
+                    @endif
                     >
-                        {{$category->icon}} {{ $category->name }}
-                    </option>
+                    {{$category->icon}} {{ $category->name }}
+                </option>
                 @endforeach
             </select>
         </div>
@@ -35,12 +42,12 @@
         <button class="button add" type="submit">{{ $buttonText }}</button>
     </form>
     @if (request()->routeIs('transactions.edit'))
-            <form action="{{ route('transactions.destroy', $transaction->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this transaction?');">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="button remove">
-                    Delete
-                </button>
-            </form>
+    <form action="{{ route('transactions.destroy', $transaction->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this transaction?');">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="button remove">
+            Delete
+        </button>
+    </form>
     @endif
 </div>

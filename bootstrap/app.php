@@ -12,7 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->append([
-            \App\Http\Middleware\IncludeObjectsInViews::class,
+            \App\Http\Middleware\ProvideGlobals::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

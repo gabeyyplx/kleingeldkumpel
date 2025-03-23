@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('value', 10, 2);
+            $table->enum('type', ['expense', 'income']);
             $table->date('date');
             $table->foreignIdFor(Category::class)->constrained();
             $table->foreignIdFor(Account::class)->constrained();

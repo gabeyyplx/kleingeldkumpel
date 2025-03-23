@@ -96,10 +96,17 @@ a {
     font-weight: lighter;
 }
 
-.transaction .amount {
+.transaction .value {
     text-align: right;
-    font-weight: 
-    flex: 3 0 0;
+    font-weight: bold;
+}
+
+.transaction.expense .value {
+    color: red;
+}
+
+.transaction.income .value {
+    color: green;
 }
 
 .box {
