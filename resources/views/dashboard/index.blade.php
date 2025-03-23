@@ -8,7 +8,7 @@
         {{ $formatter->currency($account->balance) }}
     </div>
 
-    @if($expenses->pluck('total')->sum() !== 0)
+    @if($totalExpenses !== 0)
     <div class="box">
         <strong>
             Expenses since {{ $formatter->date(now()->startOfMonth()) }} </strong>
@@ -17,7 +17,7 @@
         data-labels="{{ json_encode($expenses->pluck('name')) }}"
         data-values="{{ json_encode($expenses->pluck('total')) }}"
         ></canvas>
-        Total expenses: {{ $formatter->currency($expenses->pluck('total')->sum()) }}
+        Total expenses: {{ $formatter->currency($totalExpenses) }}
     </div>
     @endif
 

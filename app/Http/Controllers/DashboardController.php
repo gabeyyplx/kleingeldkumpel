@@ -16,11 +16,12 @@ class DashboardController extends Controller
         $expenses = DB::table('transactions')
             ->join('categories', 'transactions.category_id', '=', 'categories.id')
             ->where('transactions.account_id', $account->id)
-            ->where('transactions.value', '<', 0)
+            ->where('transactions.type', 'expense')
             ->where('transactions.date', '>=', now()->startOfMonth())
             ->groupBy('categories.name')
             ->select('categories.name as name', DB::raw('SUM(transactions.value) as total'))
             ->get();
-        return view('dashboard.index')->with(compact('account', 'expenses'));
+        $totalExpenses = $expenses->sum('total');
+        return view('dashboard.index')->with(compact('account', 'expenses', 'totalExpenses'));
     }
 }
