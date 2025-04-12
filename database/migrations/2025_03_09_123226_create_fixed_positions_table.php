@@ -17,10 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('value', 10, 2);
+            $table->enum('type', ['income', 'expense']);
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->timestamp('last_applied')->nullable();
-            $table->enum('period', ['monthly', 'quarterly', 'semiannually', 'annually']);
+            $table->enum('period', ['monthly', 'every 2 months', 'quarterly', 'every 6 months', 'annually']);
             $table->boolean('active')->default(true);
             $table->foreignIdFor(Category::class)->constrained();
             $table->foreignIdFor(Account::class)->constrained();

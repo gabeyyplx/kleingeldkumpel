@@ -13,11 +13,20 @@ class TransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         $account = Account::find($user->current_account) ?? Account::where('user_id', $user->id)->first();
-        $transactions = Transaction::where('account_id', $account->id)->with('category')->latest()->get();
+        $transactions = Transaction
+            ::where('account_id', $account->id)
+            ->with('category')
+            ->latest()
+            ->paginate(25);
+
+            if($request->ajax()) {
+                return view('transactions.list', compact('transactions'));
+            }
+
         return view('transactions.index', compact('transactions', 'account'));
     }
 
