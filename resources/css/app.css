@@ -169,3 +169,23 @@ input, select {
     width: 100%;
     background-color: white;
 }
+
+input[type=checkbox] {
+    width: auto;
+    padding: initial;
+    height: initial;
+}
+
+.link-list {
+    padding: 1em 0 0 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.link-list a {
+    padding: 0.5em 0;
+}
+
+.link-list a:not(:last-child) {
+    border-bottom: 2px solid black;
+}

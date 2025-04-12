@@ -5,6 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Category;
 use App\Models\Account;
+use App\FixedPositionPeriod;
 
 return new class extends Migration
 {
@@ -17,8 +18,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('value', 10, 2);
-            $table->enum('type', ['expense', 'income']);
+            $table->enum('type', FixedPositionPeriod::values());
             $table->date('date');
+            $table->boolean('through_fixed_position')->default(false);
             $table->foreignIdFor(Category::class)->constrained();
             $table->foreignIdFor(Account::class)->constrained();
             $table->timestamps();

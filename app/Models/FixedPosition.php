@@ -9,12 +9,13 @@ class FixedPosition extends Model
     protected $fillable = [
             'name',
             'value',
+            'type',
+            'active',
             'category_id',
             'account_id',
             'period',
             'start_date',
             'end_date',
-            'last_applied',
     ];
 
     public function category() {
