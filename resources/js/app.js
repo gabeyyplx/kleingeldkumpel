@@ -1,32 +1,8 @@
 import './bootstrap';
-import Chart from 'chart.js/auto'
-
+import Dashboard from './dashboard';
+import InfiniteScrolling  from './infinite-scrolling';
 
 document.addEventListener('DOMContentLoaded', () => {
-    initializeExpenseChart();
+    Dashboard.init()
+    InfiniteScrolling.init()
 })
-
-const initializeExpenseChart = () => {
-    const dashboardPieChart = document.getElementById('expensesPieChart');
-    if (dashboardPieChart) {
-        const labels = JSON.parse(dashboardPieChart.getAttribute('data-labels'));
-        if(labels.length === 0){
-            return
-        }
-        const values = JSON.parse(dashboardPieChart.getAttribute('data-values'));
-        if(values.length === 0) {
-            return;
-        }
-        
-        new Chart(dashboardPieChart, {
-            type: 'doughnut',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: values,
-                }]
-            }
-        });
-    }
-}
-

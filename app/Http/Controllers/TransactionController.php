@@ -23,8 +23,8 @@ class TransactionController extends Controller
             ->latest()
             ->paginate(25);
 
-            if($request->ajax()) {
-                return view('transactions.list', compact('transactions'));
+            if($request->query('page')) {
+                return view('transactions.list', compact('transactions', 'account'));
             }
 
         return view('transactions.index', compact('transactions', 'account'));

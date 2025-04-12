@@ -17,5 +17,8 @@
 <div class="box success">{{ session('success') }}</div>
 @endif
 
+<div class="transactions-list infinite-scrolling">
 @include('transactions.list') 
+</div>
+
 @endsection
