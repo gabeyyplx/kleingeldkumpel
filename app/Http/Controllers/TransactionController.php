@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Models\Transaction;
 use App\Models\Category;
+use App\FixedPositionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,8 @@ class TransactionController extends Controller
     {
         $user = Auth::user();
         $account = Account::find($user->current_account) ?? Account::where('user_id', $user->id)->first();
+        $fixedPositionService = new FixedPositionService()
+            ->setAccount($account);
         $transactions = Transaction
             ::where('account_id', $account->id)
             ->with('category')
