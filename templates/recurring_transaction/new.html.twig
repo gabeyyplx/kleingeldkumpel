@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New RecurringTransaction{% endblock %}
+
+{% block body %}
+    <h1>Create new RecurringTransaction</h1>
+
+    {{ include('recurring_transaction/_form.html.twig') }}
+
+    <a href="{{ path('app_recurring_transaction_index') }}">back to list</a>
+{% endblock %}

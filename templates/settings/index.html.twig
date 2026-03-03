@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block body %}
+<h1>Settings</h1>
+<a href="{{ path('app_category_index')}}">Manage Categories</a>
+<a href="{{ path('app_recurring_transaction_index')}}">Manage recurring transactions</a>
+<a href="{{ path('app_user_edit', {'id': app.user.id}) }}">Edit Profile</a>
+<a href="{{ path('app_logout') }}">Logout</a>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RecurringTransaction index{% endblock %}
+
+{% block body %}
+    <h1>RecurringTransaction index</h1>
+
+    <div class="actions">
+        <a class="btn add" href="{{ path('app_recurring_transaction_new') }}">Create new</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+                <th>IsIncome</th>
+                <th>StartDate</th>
+                <th>FrequencyInMonths</th>
+                <th>Last applied</th>
+                <th>Category</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recurring_transaction in recurring_transactions %}
+            <tr>
+                <td>{{ recurring_transaction.name }}</td>
+                <td>{{ recurring_transaction.value }}</td>
+                <td>{{ recurring_transaction.isIncome ? 'Yes' : 'No' }}</td>
+                <td>{{ recurring_transaction.startDate ? recurring_transaction.startDate|date('d.m.Y') : '-' }}</td>
+                <td>{{ recurring_transaction.frequencyInMonths }}</td>
+                <td>{{ recurring_transaction.lastApplied ? recurring_transaction.lastApplied|date('d.m.Y', 'Europe/Berlin') : '-' }}</td>
+                <td>{{ recurring_transaction.category.symbol }} {{ recurring_transaction.category.name }}</td>
+                <td>
+                    <a href="{{ path('app_recurring_transaction_edit', {'id': recurring_transaction.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

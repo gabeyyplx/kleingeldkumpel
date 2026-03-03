@@ -1,0 +1,14 @@
+<header>
+        <div class="logo">
+            <a href="{{ path('app_dashboard') }}">
+                Kleingeldkumpel
+            </a>
+        </div>
+        <div class="actions">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}      
+                <a class="btn add" href="{{ path('app_transaction_new') }}">
+                    +
+                </a>
+            {% endif %}
+        </div>
+</header>

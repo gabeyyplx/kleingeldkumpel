@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+    <h1>Dashboard</h1>
+
+    <div class="account-balance">
+        {{ total|format_currency('EUR', locale: 'de') }}
+    </div>
+
+    <h2>Expenses</h2>
+    {% if expenseValues %}
+        Total: {{ expenseValues|reduce((total, value) => total + value)|format_currency('EUR', locale: 'de') }}<br />
+        ({{ from|date('d.m.Y') }} - {{ to|date('d.m.Y') }})
+        <canvas class="chart" id="expenseChart"></canvas>
+    {% else %}
+        No expenses (yet...) 👍
+    {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+(function() {
+    const ctx = document.getElementById('expenseChart');
+    if(!ctx) {
+        return;
+    }
+
+    const data = {
+        labels: {{ expenseCategories|json_encode|raw }},
+        datasets: [{
+            data: {{ expenseValues|map((value, key) => value)|json_encode|raw }},
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'pie',
+        data: data,
+    });
+})();
+</script>
+{% endblock %}

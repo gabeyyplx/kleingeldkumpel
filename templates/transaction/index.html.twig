@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Transactions{% endblock %}
+
+{% block body %}
+    <h1>Transactions</h1>
+
+        <div class="actions">
+            <a class="btn add" href="{{ path('app_transaction_new') }}">Create new</a>
+        </div>
+
+        {% for transaction in transactions %}
+            {{ include('transaction/transaction.html.twig') }}
+            
+        {% else %}
+            No transactions found.
+        {% endfor %}
+
+{% endblock %}

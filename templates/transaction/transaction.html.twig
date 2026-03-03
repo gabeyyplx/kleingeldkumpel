@@ -1,0 +1,23 @@
+<div id="transaction-{{ transaction.id }}" class="transaction">
+    <div class="content">
+        <div class="value {{ transaction.isIncome ? 'income' : 'expense'  }}">
+            {{transaction.isIncome ? '+' : '-' }}{{ transaction.value|format_currency('EUR', locale: 'de') }}
+        </div>
+        <div class="info">
+            <div class="name">
+                <em>{{ transaction.name }}</em>
+            </div>
+            <div class="date">
+                {{ transaction.date ? transaction.date|date('d.m.Y') : '' }}
+            </div>
+        </div>
+        <div class="actions">
+            <a class="btn edit" href="{{ path('app_transaction_edit', {'id': transaction.id}) }}">Edit</a>
+            {{ include('transaction/_delete_form.html.twig') }}
+        </div>
+    </div>
+    <div class="category">
+        <div class="icon">{{ transaction.category.symbol }}</div>
+        <div class="name">{{ transaction.category.name }}</div>
+    </div>
+</div>
