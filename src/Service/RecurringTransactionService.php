@@ -23,11 +23,9 @@ class RecurringTransactionService
            foreach ($recurring->getDueDates() as $date) {
                 $transaction = $recurring->createTransaction();
                 $transaction->setDate($date);
+                $recurring->setLastApplied($date);
                 $this->entityManager->persist($transaction);
                 $user->addTransaction($transaction);
-            }
-            if (!empty($recurring->getDueDates())) {
-                $recurring->setLastApplied(new \DateTimeImmutable());
             }
         }
         $this->entityManager->flush();
